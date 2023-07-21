@@ -74,3 +74,25 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
 	return prev[maxWeight];
 }
 //space opti
+
+// further optimization
+#include <bits/stdc++.h> 
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	vector<int> prev(maxWeight+1,0);
+
+	for(int m = weight[0] ; m<=maxWeight ; m++)  prev[m] = value[0];
+
+	for(int i=1 ; i<n ; i++)
+	{
+		for(int target =maxWeight ; target>=0 ; target-- )
+		{
+			int nottake= prev[target];
+			int take = 0;
+			if(weight[i]<=target) take = value[i] + prev[target-weight[i]];
+			prev[target] = max(take,nottake);
+		}
+	}
+	return prev[maxWeight];
+}
+//further optimisation
